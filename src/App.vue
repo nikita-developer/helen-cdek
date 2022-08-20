@@ -3,6 +3,7 @@
 		<Header></Header>
 		<main class="main">
 			<router-view></router-view>
+			<p>{{$store.state.auth.likes}}</p>
 		</main>
 		<Footer></Footer>
 	</div>

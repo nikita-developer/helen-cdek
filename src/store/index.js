@@ -1,25 +1,8 @@
 import {createStore} from 'vuex'
+import auth from '@/store/modules/auth.js'
 
 export default createStore({
-    state: {
-        likes: 1,
-        isAuth: false
-    },
-    getters: {
-        
-    },
-    mutations: {
-        incrementLikes(state) {
-            state.likes += 1
-        },
-        decrementLikes(state) {
-            state.likes = state.likes - 1
-        },
-    },
-    actions: {
-
-    },
     modules: {
-
-    }
+        auth
+    },
 })

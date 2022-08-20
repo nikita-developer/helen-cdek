@@ -1,15 +1,14 @@
 <template>
     <div>
-        <h1>Страница архива</h1>
+        <h1>Страница регистрации</h1>
     </div>
 </template>
 
 <script>
-    export default {
-        
-    }
+export default {
+
+}
 </script>
 
 <style lang="scss" scoped>
-
 </style>

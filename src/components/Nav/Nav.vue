@@ -9,6 +9,12 @@
         <li>
             <router-link to="archive">Архив</router-link>
         </li>
+        <li>
+            <router-link to="login">Логин</router-link>
+        </li>
+        <li>
+            <router-link to="registration">Регистрация</router-link>
+        </li>
     </ul>
 </template>
 

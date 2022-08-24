@@ -3,7 +3,6 @@
 		<Header></Header>
 		<main class="main">
 			<router-view></router-view>
-			<p>{{$store.state.auth.likes}}</p>
 		</main>
 		<Footer></Footer>
 	</div>
@@ -12,8 +11,18 @@
 <script>
 import Header from '@/components/Header/Header.vue';
 import Footer from '@/components/Footer/Footer.vue';
+import { mapActions, mapGetters } from 'vuex';
 export default {
-    components: { Header, Footer }
+    components: { Header, Footer },
+	methods: {
+		...mapActions(['GET_AUTH']),
+	},
+	mounted() {
+		this.GET_AUTH()
+	},
+	computed: {
+		...mapGetters(['ISAUTH'])
+	}
 }
 </script>
 
@@ -22,6 +31,8 @@ export default {
 		margin: 0;
 		padding: 0;
 		box-sizing: border-box;
+		font-size: 16px;
+		font-family: sans-serif;
 	}
 	.page {
 		display: flex;

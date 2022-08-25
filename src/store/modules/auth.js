@@ -1,16 +1,19 @@
 export default {
     state: {
-        user: {
-            firstName: '',
-            lastName: '',
-            edits: false,
-            isAuth: false,
-        },
+        user: {},
         allUsers: [
             {
-                firstName: '',
-                lastName: '',
+                login: 'admin',
+                password: '1234',
+                name: 'developer',
                 edits: true,
+                isAuth: true,
+            },
+            {
+                login: 'spas',
+                password: '1234',
+                name: 'nikita',
+                edits: false,
                 isAuth: true,
             },
         ]
@@ -18,18 +21,17 @@ export default {
     actions: {
         GET_AUTH(context, payload) {
             setTimeout(() => {
-                context.commit('SET_AUTH')
-            }, 3000);
+                context.commit('SET_AUTH', payload)
+            }, 600);
         }
     },
     mutations: {
         SET_AUTH (state, payload) {
-            state.user = {
-                firstName: 'admin',
-                lastName: 'developer',
-                edits: true,
-                isAuth: true,
-            }
+            state.allUsers.forEach(element => {
+                if(element.login === payload.login && element.password === payload.password) {
+                    return state.user = element
+                }
+            });
         }
     },
     getters: {

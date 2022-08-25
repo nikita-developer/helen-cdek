@@ -3,14 +3,11 @@
         <li>
             <router-link to="/">Главная</router-link>
         </li>
-        <li>
+        <li v-if="ISAUTH.isAuth">
             <router-link to="about">О нас</router-link>
         </li>
-        <li>
+        <li v-if="ISAUTH.edits">
             <router-link to="archive">Архив</router-link>
-        </li>
-        <li>
-            <router-link to="login">Логин</router-link>
         </li>
         <li v-if="ISAUTH.isAuth">
             <router-link to="/">Выйти</router-link>

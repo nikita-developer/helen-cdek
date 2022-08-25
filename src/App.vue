@@ -9,21 +9,22 @@
 </template>
 
 <script>
-import Header from '@/components/Header/Header.vue';
-import Footer from '@/components/Footer/Footer.vue';
-import { mapActions, mapGetters } from 'vuex';
-export default {
-    components: { Header, Footer },
-	methods: {
-		...mapActions(['GET_AUTH']),
-	},
-	mounted() {
-		this.GET_AUTH()
-	},
-	computed: {
-		...mapGetters(['ISAUTH'])
+	import Header from '@/components/Header/Header.vue';
+	import Footer from '@/components/Footer/Footer.vue';
+	import { mapGetters } from 'vuex';
+	export default {
+		components: { Header, Footer },
+		computed: {
+			...mapGetters(['ISAUTH'])
+		},
+		watch: {
+			ISAUTH() {
+				if (this.ISAUTH) {
+					this.$router.push('/')
+				}
+			}
+		}
 	}
-}
 </script>
 
 <style lang="scss">

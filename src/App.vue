@@ -34,13 +34,6 @@
 </script>
 
 <style lang="scss">
-	* {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-		font-size: 16px;
-		font-family: sans-serif;
-	}
 	.page {
 		display: flex;
 		flex-direction: column;
@@ -48,6 +41,7 @@
 	}
 
 	.main {
+		display: flex;
 		flex-grow: 1;
 	}
 </style>

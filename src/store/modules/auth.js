@@ -67,6 +67,10 @@ export default {
         },
         SET_VALIDATE (state, payload) {
             return state.validate.log = payload
+        },
+        SET_LOGOUT(state) {
+            localStorage.removeItem('cdek-auth')
+            return state.user = {}
         }
     },
     getters: {

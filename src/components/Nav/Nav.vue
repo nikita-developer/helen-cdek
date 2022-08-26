@@ -1,32 +1,39 @@
 <template>
-    <ul>
-        <li>
-            <router-link to="/">Главная</router-link>
-        </li>
-        <li v-if="ISAUTH.isAuth">
-            <router-link to="about">О нас</router-link>
-        </li>
-        <li v-if="ISAUTH.edits">
-            <router-link to="archive">Архив</router-link>
-        </li>
-        <li v-if="ISAUTH.isAuth">
-            <router-link to="/">Выйти</router-link>
-        </li>
-        <li v-else>
-            <router-link to="login">Войти</router-link>
-        </li>
-    </ul>
+    <nav class="nav">
+        <router-link class="nav__link" to="/">Главная</router-link>
+        <router-link v-if="ISAUTH.isAuth" class="nav__link" to="about">О нас</router-link>
+        <router-link v-if="ISAUTH.edits" class="nav__link" to="archive">Архив</router-link>
+        <router-link v-if="ISAUTH.isAuth" class="nav__link" @click="SET_LOGOUT" to="/">Выйти</router-link>
+        <router-link v-else class="nav__link" to="login">Войти</router-link>
+    </nav>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
     export default {
         computed: {
             ...mapGetters(['ISAUTH'])
+        },
+        methods: {
+            ...mapMutations(['SET_LOGOUT'])
         }
     }
 </script>
 
 <style lang="scss" scoped>
 
+    .nav {
+        .nav__link {
+            color: var(--color-white);
+            padding: 10px;
+
+            &:last-child {
+                padding-right: 0;
+            }
+
+            &:hover {
+                opacity: .8;
+            }
+        }
+    }
 </style>

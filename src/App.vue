@@ -15,7 +15,7 @@
 	export default {
 		components: { Header, Footer },
 		methods: {
-			...mapActions(['GET_AUTH']),
+			...mapActions(['GET_MOUNTED']),
 		},
 		computed: {
 			...mapGetters(['ISAUTH'])
@@ -28,9 +28,7 @@
 			}
 		},
 		mounted() {
-			if (localStorage.getItem('cdek-auth')) {
-				this.GET_AUTH(JSON.parse(localStorage.getItem('cdek-auth')))
-			}
+			this.GET_MOUNTED(JSON.parse(localStorage.getItem('cdek-auth')))
 		},
 	}
 </script>

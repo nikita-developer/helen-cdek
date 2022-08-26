@@ -16,31 +16,48 @@ export default {
                 edits: false,
                 isAuth: true,
             },
+            {
+                login: 'helen',
+                password: '1234',
+                name: 'nikita',
+                edits: true,
+                isAuth: true,
+            },
         ],
         validate: {
             log: '',
         }
     },
     actions: {
-        GET_AUTH(context, payload) {
-            if(payload) {
+        GET_MOUNTED(context, payload) {
+            if(localStorage.getItem('cdek-auth')) {
                 context.commit('SET_AUTH', payload)
+                setTimeout(() => {
+                    let element = this.state.auth.allUsers
+                    for (let i = 0; i <= element.length; i++) {
+                        if(element[i].login === payload.login && element[i].password === payload.password) {
+                            context.commit('SET_AUTH', element[i])
+                            return
+                        }
+                        localStorage.removeItem('cdek-auth')
+                        context.commit('SET_AUTH', {})
+                    }
+                }, 1000);
             }
+        },
+        GET_AUTH(context, payload) {
             setTimeout(() => {
-                this.state.auth.allUsers.some(element => {
-                    if(element.login === payload.login && element.password === payload.password) {
-                        context.commit('SET_AUTH', element)
+                let element = this.state.auth.allUsers
+                for (let i = 0; i < element.length; i++) {
+                    if(element[i].login === payload.login && element[i].password === payload.password) {
+                        context.commit('SET_AUTH', element[i])
                         context.commit('SET_VALIDATE', '')
-                        localStorage.setItem('cdek-auth', JSON.stringify(element))
-                        console.log(1);
+                        localStorage.setItem('cdek-auth', JSON.stringify(element[i]))
                         return
                     } else {
                         context.commit('SET_VALIDATE', 'Нет такого пользователя')
-                        localStorage.removeItem('cdek-auth')
-                        context.commit('SET_AUTH', {})
-                        console.log(2);
                     }
-                })
+                }
             }, 1000);
         }
     },

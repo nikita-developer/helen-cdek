@@ -50,14 +50,17 @@ router.beforeEach((to, from, next) => {
     let routLogin = to.meta.login
 
     if(routEdits && !edits) {
+        console.log(1);
         return next('/')
     }
 
     if(routLogin && isAuth) {
+        console.log(2);
         return next('/')
     }
 
     if(routAuth && !isAuth) {
+        console.log(3);
         return next('/')
     }
 

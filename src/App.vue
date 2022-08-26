@@ -11,9 +11,12 @@
 <script>
 	import Header from '@/components/Header/Header.vue';
 	import Footer from '@/components/Footer/Footer.vue';
-	import { mapGetters } from 'vuex';
+	import { mapGetters, mapActions } from 'vuex';
 	export default {
 		components: { Header, Footer },
+		methods: {
+			...mapActions(['GET_AUTH']),
+		},
 		computed: {
 			...mapGetters(['ISAUTH'])
 		},
@@ -23,7 +26,12 @@
 					this.$router.push('/')
 				}
 			}
-		}
+		},
+		mounted() {
+			if (localStorage.getItem('cdek-auth')) {
+				this.GET_AUTH(JSON.parse(localStorage.getItem('cdek-auth')))
+			}
+		},
 	}
 </script>
 

@@ -24,7 +24,6 @@ import Aside from '@/components/Aside/Aside.vue';
 </script>
 
 <style lang="scss">
-
     .archive {
         position: relative;
         display: flex;
@@ -33,8 +32,8 @@ import Aside from '@/components/Aside/Aside.vue';
         padding-bottom: 30px;
 
         &__body {
+            width: 100%;
             flex-grow: 1;
-            padding: 15px;
         }
 
         &__aside {

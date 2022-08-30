@@ -1,72 +1,65 @@
 <template>
     <div class="graphics-job">
-        <h1 class="archive-title archive__title">График дежурств</h1>
-        <div class="table">
-            <div class="table__row">
-                <div class="table__col table__col-name"><p>Полина</p></div>
-                <div class="table__col table__col-name"><p>Татьяна</p></div>
+        <!-- <h1 class="archive-title archive__title">График дежурств</h1> -->
+        <div class="graphics-job-name">
+            <div class="graphics-job-name__item user-one-color">
+                <p>Полина</p>
             </div>
-            <div class="table__row">
-                <div class="table__col"><p>Понедельник</p></div>
-                <div class="table__col"><p>Вторник</p></div>
-                <div class="table__col"><p>Среда</p></div>
-                <div class="table__col"><p>Четверг</p></div>
-                <div class="table__col"><p>Пятница</p></div>
-                <div class="table__col"><p>Суббота</p></div>
-                <div class="table__col"><p>Воскресенье</p></div>
-            </div>
-            <div class="table__row">
-                <div class="table__col">1</div>
-                <div class="table__col">2</div>
-                <div class="table__col">3</div>
-                <div class="table__col">4</div>
-                <div class="table__col">5</div>
-                <div class="table__col">6</div>
-                <div class="table__col">7</div>
-            </div>
-            <div class="table__row">
-                <div class="table__col">8</div>
-                <div class="table__col">9</div>
-                <div class="table__col">10</div>
-                <div class="table__col">11</div>
-                <div class="table__col">12</div>
-                <div class="table__col">13</div>
-                <div class="table__col">14</div>
-            </div>
-            <div class="table__row">
-                <div class="table__col">15</div>
-                <div class="table__col">16</div>
-                <div class="table__col">17</div>
-                <div class="table__col">18</div>
-                <div class="table__col">19</div>
-                <div class="table__col">20</div>
-                <div class="table__col">21</div>
-            </div>
-            <div class="table__row">
-                <div class="table__col">22</div>
-                <div class="table__col">23</div>
-                <div class="table__col">24</div>
-                <div class="table__col">25</div>
-                <div class="table__col">26</div>
-                <div class="table__col">27</div>
-                <div class="table__col">28</div>
-            </div>
-            <div class="table__row">
-                <div class="table__col">29</div>
-                <div class="table__col">30</div>
-                <div class="table__col">31</div>
+            <div class="graphics-job-name__item">
+                <p>Татьяна</p>
             </div>
         </div>
-        <div class="graphics__result">
-            <p>Итого:</p>
-            <p><strong>Полина 14 смен</strong>, <strong>Татьяна 16 смен</strong></p>
+        <div class="table" v-for="item in mont" :key="item.id">
+            <div class="table__body">
+                <div class="table__mont">{{item.name}}</div>
+                <div class="table__row">
+                    <div class="table__col">Пн</div>
+                    <div class="table__col">Вт</div>
+                    <div class="table__col">Ср</div>
+                    <div class="table__col">Чт</div>
+                    <div class="table__col">Пт</div>
+                    <div class="table__col">Сб</div>
+                    <div class="table__col">Вс</div>
+                </div>
+                <div class="table__row table__row--day">
+                    <div class="table__col" :class="{ 'user-one-color': userActive(day, item.users) }" v-for="day in item.day" :key="day">{{day}}</div>
+                </div>
+            </div>
+            <div class="table__result">
+                <p><strong>Итого:</strong></p>
+                <p>{{ firstName }} {{ item.users.length }} смен, {{ lastName }} {{ item.day.length - item.users.length }} смен</p>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        
+        data() {
+            return {
+                firstName: 'Татьяна',
+                lastName: 'Полина',
+                mont: [
+                    {
+                        id: 1,
+                        name: 'Август',
+                        day: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+                        users: [1, 2, 5, 6, 9, 10, 13, 14, 17, 18, 21, 22, 25, 26, 29, 30],
+                        firstMoney: null,
+                        lastMoney: null,
+                    }
+                ]
+            }
+        },
+        methods: {
+            userActive(day, users) {
+                for (let i = 0; i < users.length; i++) {
+                    if (users[i] == day) {
+                        return true
+                    }
+                }
+            },
+        }
     }
 </script>
 
@@ -76,6 +69,18 @@
     .table {
         display: flex;
         flex-direction: column;
+        overflow: auto;
+
+        &__mont {
+            margin-bottom: 5px;
+            margin-top: 5px;
+            margin-left: 3px;
+            font-weight: bold;
+        }
+
+        &__body {
+            display: table;
+        }
 
         &__row {
             display: flex;
@@ -83,25 +88,52 @@
             &:not(:last-child) {
                 margin-bottom: 6px;
             }
+
+            &--day {
+                flex-wrap: wrap;
+            }
         }
 
         &__col {
             flex: 0 0 auto;
             width: calc(14.285% - 6px);
-            margin-right: 3px;
-            margin-left: 3px;
+            margin: 3px;
             padding: 10px 15px;
             border: 1px solid var(--color-border);
             cursor: pointer;
+            text-align: center;
+        }
 
-            &-name {
-                width: calc(50% - 6px);
-                text-align: center;
+        &__result {
+            margin-top: 20px;
+
+            & p:first-child {
+                margin-bottom: 5px;
             }
         }
 
-        &__name {
+        @media (max-width: 480px) {
+            &__col {
+                padding-right: 0;
+                padding-left: 0;
+                font-size: 14px;
+            }
+        }
+    }
 
+    .user-one-color {
+        background-color: rgb(211, 255, 209);
+    }
+
+    .graphics-job-name {
+        display: flex;
+
+        &__item {
+            width: calc(50% - 6px);
+            text-align: center;
+            border: 1px solid var(--color-border);
+            padding: 10px 15px;
+            margin: 3px;
         }
     }
 </style>

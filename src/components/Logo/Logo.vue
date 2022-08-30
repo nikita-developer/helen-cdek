@@ -1,5 +1,5 @@
 <template>
-    <router-link to="/" class="logo">Helen-cdek</router-link>
+    <router-link to="/" class="logo"></router-link>
 </template>
 
 <script>

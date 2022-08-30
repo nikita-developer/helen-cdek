@@ -2,6 +2,8 @@ import Home from '@/pages/Home'
 import About from '@/pages/About'
 import Archive from '@/pages/Archive'
 import Login from '@/pages/Login'
+import GraphicsJob from '@/pages/GraphicsJob'
+import GraphicsMoney from '@/pages/GraphicsMoney'
 import store from '@/store/modules/auth'
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -24,6 +26,16 @@ const routes = [
             edits: true,
             auth: true
         },
+        children: [
+            {
+                path: '/archive/graphics-job',
+                component: GraphicsJob,
+            },
+            {
+                path: '/archive/graphics-money',
+                component: GraphicsMoney,
+            },
+        ]
     },
     {
         path: '/login',

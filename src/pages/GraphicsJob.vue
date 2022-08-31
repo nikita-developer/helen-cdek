@@ -9,7 +9,7 @@
                 <p>Татьяна</p>
             </div>
         </div>
-        <div class="table" v-for="item in mont" :key="item.id">
+        <div class="table" v-for="(item, index) in mont" :key="item.id">
             <div class="table__body">
                 <div class="table__mont">{{item.name}}</div>
                 <div class="table__row">
@@ -22,7 +22,7 @@
                     <div class="table__col">Вс</div>
                 </div>
                 <div class="table__row table__row--day">
-                    <div class="table__col" :class="{ 'user-one-color': userActive(day, item.users) }" v-for="day in item.day" :key="day">{{day}}</div>
+                    <div class="table__col" @click="editsCount(index, day)" :class="{ 'user-one-color': userActive(day, item.users) }" v-for="day in item.day" :key="day">{{day}}</div>
                 </div>
             </div>
             <div class="table__result">
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
     export default {
         data() {
             return {
@@ -45,9 +46,18 @@
                         name: 'Август',
                         day: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
                         users: [1, 2, 5, 6, 9, 10, 13, 14, 17, 18, 21, 22, 25, 26, 29, 30],
-                    }
-                ]
+                    },
+                    {
+                        id: 1,
+                        name: 'Сентябрь',
+                        day: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
+                        users: [1, 2, 5, 6, 9, 10, 22, 25, 26, 29, 30],
+                    },
+                ],
             }
+        },
+        computed: {
+            ...mapGetters(['ISAUTH'])
         },
         methods: {
             userActive(day, users) {
@@ -55,6 +65,18 @@
                     if (users[i] == day) {
                         return true
                     }
+                }
+            },
+            editsCount(index, day) {
+                if (this.ISAUTH.edits) {
+                    this.mont[index].users.find((el, idx) => {
+                        if (el === day) {
+                            return this.mont[index].users.splice(idx, 1)
+                        }
+                        if (idx === this.mont[index].users.length - 1) {
+                            return this.mont[index].users.push(day)
+                        }
+                    })
                 }
             },
         }

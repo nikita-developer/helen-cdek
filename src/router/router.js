@@ -23,7 +23,6 @@ const routes = [
         path: '/archive',
         component: Archive,
         meta: {
-            edits: true,
             auth: true
         },
         children: [
@@ -54,25 +53,17 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    let edits = store.state.user.edits
     let isAuth = store.state.user.isAuth
 
     let routAuth = to.meta.auth
-    let routEdits = to.meta.edits
     let routLogin = to.meta.login
 
-    if(routEdits && !edits) {
-        console.log(1);
-        return next('/')
-    }
 
     if(routLogin && isAuth) {
-        console.log(2);
         return next('/')
     }
 
     if(routAuth && !isAuth) {
-        console.log(3);
         return next('/')
     }
 

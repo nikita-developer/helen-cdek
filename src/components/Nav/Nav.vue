@@ -1,8 +1,8 @@
 <template>
     <nav class="nav">
         <router-link class="nav__link" to="/">Главная</router-link>
-        <router-link v-if="ISAUTH.isAuth" class="nav__link" to="about">О нас</router-link>
-        <router-link v-if="ISAUTH.edits" class="nav__link" to="archive">Архив</router-link>
+        <router-link v-if="ISAUTH.isAuth" class="nav__link" to="/about">О нас</router-link>
+        <router-link v-if="ISAUTH.isAuth" class="nav__link" to="/archive">Архив</router-link>
         <router-link v-if="ISAUTH.isAuth" class="nav__link" @click="SET_LOGOUT" to="/">Выйти</router-link>
         <router-link v-else class="nav__link" to="login">Войти</router-link>
     </nav>

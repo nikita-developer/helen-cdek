@@ -1,6 +1,7 @@
 <template>
     <div class="graphics-job">
         <!-- <h1 class="archive-title archive__title">График дежурств</h1> -->
+        <button @click="newDate" class="graphics-job-add">Начать новый месяц</button>
         <label class="graphics-job-search">
             <input @change="search" v-model="calendar" type="date" class="graphics-job-search__field">
         </label>
@@ -51,14 +52,7 @@ import { mapGetters } from 'vuex'
                         data: '2022-08-31',
                         name: 'Август',
                         day: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
-                        users: [1, 2, 5, 6, 9, 10, 13, 14, 17, 18, 21, 22, 25, 26, 29, 30],
-                    },
-                    {
-                        id: 2,
-                        data: '2022-09-01',
-                        name: 'Сентябрь',
-                        day: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
-                        users: [1, 2, 5, 6, 9, 10, 22, 25, 26, 29, 30],
+                        users: [],
                     },
                 ],
             }
@@ -93,7 +87,40 @@ import { mapGetters } from 'vuex'
                     })
                 }
             },
-        }
+            newDate() {
+                let month = new Date().getMonth() + 1 < 10 ? '0' + (new Date().getMonth() + 1) : new Date().getMonth() + 1
+                let year = new Date().getFullYear()
+                let day = new Date().getDate() < 10 ? '0' + new Date().getDate() : new Date().getDate()
+
+                let fullDate = `${year}-${month}-${day}`
+                let fullDay = Math.round((new Date(year, month, 1) - new Date(year, month - 1, 1)) / 1000 / 3600 / 24)
+                let monthText = ['Январь', 'Феврль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
+                let montTextThis = ''
+
+                for (let i = 0; i <= monthText.length; i++) {
+                    if (new Date().getMonth() == i) {
+                        montTextThis = monthText[i]
+                    }
+                }
+
+                let mont = {
+                    id: new Date() + Math.random(),
+                    data: fullDate,
+                    name: montTextThis,
+                    day: [],
+                    users: [],
+                }
+
+                for (let i = 1; i <= fullDay; i++) {
+                    mont.day.push(i)
+                }
+
+                this.mont.push(mont)
+            },
+        },
+        mounted() {
+            this.search()
+        },
     }
 </script>
 

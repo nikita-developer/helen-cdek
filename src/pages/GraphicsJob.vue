@@ -1,6 +1,9 @@
 <template>
     <div class="graphics-job">
         <!-- <h1 class="archive-title archive__title">График дежурств</h1> -->
+        <label class="graphics-job-search">
+            <input @change="search" v-model="calendar" type="date" class="graphics-job-search__field">
+        </label>
         <div class="graphics-job-name">
             <div class="graphics-job-name__item user-one-color">
                 <p>Полина</p>
@@ -9,7 +12,7 @@
                 <p>Татьяна</p>
             </div>
         </div>
-        <div class="table" v-for="(item, index) in mont" :key="item.id">
+        <div class="table" v-for="(item, index) in newMont" :key="item.id">
             <div class="table__body">
                 <div class="table__mont">{{item.name}}</div>
                 <div class="table__row">
@@ -40,15 +43,19 @@ import { mapGetters } from 'vuex'
             return {
                 firstName: 'Татьяна',
                 lastName: 'Полина',
+                calendar: '2022-08-31',
+                newMont: [],
                 mont: [
                     {
                         id: 1,
+                        data: '2022-08-31',
                         name: 'Август',
                         day: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
                         users: [1, 2, 5, 6, 9, 10, 13, 14, 17, 18, 21, 22, 25, 26, 29, 30],
                     },
                     {
-                        id: 1,
+                        id: 2,
+                        data: '2022-09-01',
                         name: 'Сентябрь',
                         day: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
                         users: [1, 2, 5, 6, 9, 10, 22, 25, 26, 29, 30],
@@ -60,6 +67,13 @@ import { mapGetters } from 'vuex'
             ...mapGetters(['ISAUTH'])
         },
         methods: {
+            search() {
+                let result = this.mont.filter(elem => {
+                    if (elem.data.indexOf(this.calendar) !== -1) return elem
+                })
+
+                this.newMont = result
+            },
             userActive(day, users) {
                 for (let i = 0; i < users.length; i++) {
                     if (users[i] == day) {
@@ -69,12 +83,12 @@ import { mapGetters } from 'vuex'
             },
             editsCount(index, day) {
                 if (this.ISAUTH.edits) {
-                    this.mont[index].users.find((el, idx) => {
+                    this.newMont[index].users.find((el, idx) => {
                         if (el === day) {
-                            return this.mont[index].users.splice(idx, 1)
+                            return this.newMont[index].users.splice(idx, 1)
                         }
-                        if (idx === this.mont[index].users.length - 1) {
-                            return this.mont[index].users.push(day)
+                        if (idx === this.newMont[index].users.length - 1) {
+                            return this.newMont[index].users.push(day)
                         }
                     })
                 }
@@ -84,12 +98,14 @@ import { mapGetters } from 'vuex'
 </script>
 
 <style lang="scss" scoped>
-
-
     .table {
         display: flex;
         flex-direction: column;
         overflow: auto;
+
+        &:not(:last-child) {
+            margin-bottom: 30px;
+        }
 
         &__mont {
             margin-bottom: 5px;
@@ -125,7 +141,7 @@ import { mapGetters } from 'vuex'
         }
 
         &__result {
-            margin-top: 20px;
+            margin-top: 10px;
 
             & p:first-child {
                 margin-bottom: 5px;
@@ -154,6 +170,24 @@ import { mapGetters } from 'vuex'
             border: 1px solid var(--color-border);
             padding: 10px 15px;
             margin: 3px;
+        }
+    }
+
+    .graphics-job-search {
+        margin-bottom: 15px;
+        margin-right: 3px;
+        margin-left: 3px;
+
+        &__field {
+            display: block;
+            font-size: 18px;
+            width: 100%;
+            padding: 7.5px 10px;
+            border: 1px solid var(--color-border);
+
+            &:focus {
+                outline: 1px solid var(--color-main);;
+            }
         }
     }
 </style>
